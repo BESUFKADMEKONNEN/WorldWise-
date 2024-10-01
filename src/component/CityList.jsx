@@ -2,7 +2,6 @@ import CityItem from "./CityItem";
 import styles from "./cityList.module.css";
 import Spinner from "./Spinner";
 import Message from './Message'
-import PropTypes from "prop-types";
 import { useCities } from "../Context/CitiesContext";
 
 // CityList.propTypes = {

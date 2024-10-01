@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
-import PropTypes from "prop-types";
 import "flag-icons/css/flag-icons.min.css";
 import { useCities } from "../Context/CitiesContext";
 
@@ -22,7 +21,7 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function CityItem({ city }) {
-  const { currentCity,deleteCity } = useCities();
+  const { currentCity, deleteCity } = useCities();
   const { cityName, emoji, date, id, position } = city;
 
   const countryCode = (emoji) =>
@@ -31,28 +30,27 @@ function CityItem({ city }) {
       .join("")
       .toLowerCase();
 
-      function handleDelete(e){
-        e.preventDefault();
-deleteCity(id)
-      }
+  function handleDelete(e) {
+    e.preventDefault();
+    deleteCity(id);
+  }
 
   // const convertCodeToFlagEmoji = (code) => {
   //   if (typeof code !== 'string' || code.length !== 2) {
   //     console.error('Invalid country code:', code);
   //     return '';
   //   }
-  
+
   //   const flagEmoji = String.fromCodePoint(
   //     ...code
   //       .toUpperCase()
   //       .split("")
   //       .map((char) => 0x1F1E6 + char.charCodeAt(0) - 'A'.charCodeAt(0))
   //   );
-  
+
   //   console.log('Converted:', code, 'to', flagEmoji);
   //   return flagEmoji;
   // };
-
 
   return (
     <li>
@@ -65,7 +63,9 @@ deleteCity(id)
         <span className={`${styles.emoji} fi fi-${countryCode(emoji)}`}></span>{" "}
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>({formatDate(date)})</time>
-        <button className={styles.deleteBtn} onClick={handleDelete}>&times;</button>
+        <button className={styles.deleteBtn} onClick={handleDelete}>
+          &times;
+        </button>
       </Link>
     </li>
   );
