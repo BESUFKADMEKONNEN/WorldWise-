@@ -3,10 +3,10 @@ import { createContext, useContext, useEffect } from "react";
 
 const cityContext = createContext();
 // use it when offline
-// const BASE_URL = "http://localhost:8000/";
+// const BASE_URL = "http://localhost:8000";
 
 //on vercel deployement
-const BASE_URL = "https://world-wise-cyan-ten.vercel.app/api/data";
+const BASE_URL = "https://world-wise-cyan-ten.vercel.app/api/";
 
 function CitiesProvider({ children }) {
   const initialStates = {
@@ -70,7 +70,7 @@ function CitiesProvider({ children }) {
     async function fetchCities() {
       dispatch({ type: "loading" });
       try {
-        const res = await fetch(`${BASE_URL}cities`);
+        const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
         const citiesWithDates = data.map((city) => ({
           ...city,
@@ -93,7 +93,7 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      const res = await fetch(`${BASE_URL}cities/${id}`);
+      const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
       // setCurrentCity(data);
       dispatch({ type: "city/loaded", payload: data });
@@ -105,7 +105,7 @@ function CitiesProvider({ children }) {
   async function createNewCity(newCity) {
     dispatch({ type: "loading" });
     try {
-      const res = await fetch(`${BASE_URL}cities`, {
+      const res = await fetch(`${BASE_URL}/cities`, {
         method: "POST",
         body: JSON.stringify(newCity),
         headers: { "Content-Type": "appication/json" },
@@ -125,7 +125,7 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      const res = await fetch(`${BASE_URL}cities/${id}`, {
+      const res = await fetch(`${BASE_URL}/cities/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
