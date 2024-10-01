@@ -1,16 +1,10 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "api/cities.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/cities",
-        "dest": "/api/cities.js"
-      }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [],
+  "routes": [
+    {
+      "src": "/data/cities.json",
+      "dest": "/data/cities.json"
+    }
+  ]
+}
