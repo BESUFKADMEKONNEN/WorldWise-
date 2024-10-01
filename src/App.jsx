@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import Homepage from "./pages/Homepage";
 import PageNotFound from "./pages/PageNotFound";
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
@@ -19,7 +19,7 @@ function App() {
       <CitiesProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Homepage />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="product" element={<Product />} />
             <Route
