@@ -3,7 +3,7 @@ import styles from "./Login.module.css";
 import PageNav from "../component/PageNav";
 import Button from "../component/Button";
 import { useFakeAuth } from "./../Context/FakeAuthContext";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
@@ -12,7 +12,7 @@ export default function Login() {
 
   const { login, isAuthenticated } = useFakeAuth();
   const navigate = useNavigate();
-  
+
   function handleSummit(e) {
     e.preventDefault();
     if (email && password) {

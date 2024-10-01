@@ -2,7 +2,7 @@ import styles from "./CountryList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import CountryItem from './CountryItem'
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { useCities } from "../Context/CitiesContext";
 
 // CountryList.propTypes = {

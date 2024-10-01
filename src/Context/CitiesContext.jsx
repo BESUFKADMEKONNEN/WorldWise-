@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 const cityContext = createContext();
 const BASE_URL = "http://localhost:8000";
@@ -150,7 +150,6 @@ function CitiesProvider({ children }) {
     </cityContext.Provider>
   );
 }
-
 
 function useCities() {
   const context = useContext(cityContext);
