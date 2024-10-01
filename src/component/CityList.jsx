@@ -1,7 +1,7 @@
 import CityItem from "./CityItem";
-import styles from "./cityList.module.css";
+import styles from "./CityList.module.css";
 import Spinner from "./Spinner";
-import Message from './Message'
+import Message from "./Message";
 import { useCities } from "../Context/CitiesContext";
 
 // CityList.propTypes = {
@@ -15,12 +15,15 @@ import { useCities } from "../Context/CitiesContext";
 //   isLoading: PropTypes.bool.isRequired,
 // };
 
-
 function CityList() {
-  const { cities, isLoading }=useCities();
+  const { cities, isLoading } = useCities();
   if (isLoading) return <Spinner />;
-  if(!cities.length) return <Message 
-  message={'Add your frist city by clicking on a city  on the map'}/>
+  if (!cities.length)
+    return (
+      <Message
+        message={"Add your frist city by clicking on a city  on the map"}
+      />
+    );
   return (
     <ul className={styles.cityList}>
       {cities.map((city) => (
