@@ -6,7 +6,7 @@ const cityContext = createContext();
 // const BASE_URL = "http://localhost:8000/";
 
 //on vercel deployement
-const BASE_URL = "https://world-wise-cyan-ten.vercel.app/";
+const BASE_URL = "https://world-wise-cyan-ten.vercel.app/api/data";
 
 function CitiesProvider({ children }) {
   const initialStates = {
