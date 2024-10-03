@@ -1,3 +1,4 @@
+import { error } from "console";
 import { promises as fs } from "fs";
 import path from "path";
 
@@ -14,22 +15,43 @@ export default async function handler(req, res) {
     }
 
     if (req.method === "POST") {
-      const newCity = req.body;
-      newCity.id = Date.now().toString(); // Add a unique ID
-      cities.push(newCity);
+      try {
+        const newCity = req.body;
+        if (!newCity) {
+          throw new Error("No city data provided");
+        }
+        newCity.id = Date.now().toString(); // Generate a unique ID
+        cities.push(newCity);
 
-      await fs.writeFile(filePath, JSON.stringify(cities, null, 2));
-      res.status(201).json(newCity);
+        await fs.writeFile(filePath, JSON.stringify(cities, null, 2));
+
+        res.status(201).json(newCity);
+      } catch (error) {
+        res.status(400).json({ message: "Error adding city", error });
+      }
     }
 
     if (req.method === "DELETE") {
       const { id } = req.query;
-      cities = cities.filter((city) => city.id !== id);
+      if (!id) {
+        return res.status(400).json({ message: "City ID is required" });
+      }
+
+      const cityIndex = cities.findIndex((city) => city.id === id);
+      if (cityIndex === -1) {
+        return res.status(404).json({ message: "City not found" });
+      }
+
+      cities.splice(cityIndex, 1); // Remove the city
 
       await fs.writeFile(filePath, JSON.stringify(cities, null, 2));
+
       res.status(200).json({ message: "City deleted successfully" });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Error reading or writing to cities.json", error });
+  } catch {
+    err;
+  }
+  {
+    console.log(error);
   }
 }

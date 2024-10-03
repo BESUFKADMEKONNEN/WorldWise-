@@ -13,7 +13,7 @@
       "dest": "/api/cities.js"
     },
     {
-      "src": "/api/cities/:id",
+      "src": "/api/cities/(.*)",
       "methods": ["DELETE"],
       "dest": "/api/cities.js"
     }
