@@ -1,42 +1,34 @@
-import fs from "fs";
+import { promises as fs } from "fs";
 import path from "path";
 
-// Define the path to your JSON file
-const filePath = path.join(process.cwd(), "data", "cities.json");
+// Fetch all cities from cities.json
+export default async function handler(req, res) {
+  const filePath = path.join(process.cwd(), "data", "cities.json");
 
-export default function handler(req, res) {
-  // Read the data from the JSON file
-  const jsonData = fs.readFileSync(filePath, "utf8");
-  const citiesData = JSON.parse(jsonData);
+  try {
+    const fileContents = await fs.readFile(filePath, "utf-8");
+    let cities = JSON.parse(fileContents);
 
-  // Handle the request based on the HTTP method
-  switch (req.method) {
-    case "GET":
-      res.status(200).json(citiesData.cities); // Return the cities array
-      break;
+    if (req.method === "GET") {
+      res.status(200).json(cities);
+    }
 
-    case "POST":
-      // Handle adding a new city
-      const newCity = req.body; // New city data from request body
-      citiesData.cities.push(newCity); // Add the new city to the array
-      fs.writeFileSync(filePath, JSON.stringify(citiesData, null, 2)); // Save back to the file
-      res.status(201).json(newCity); // Respond with the new city
-      break;
+    if (req.method === "POST") {
+      const newCity = req.body;
+      cities.push(newCity);
 
-    case "DELETE":
-      // Handle deleting a city
-      const idToDelete = req.query.id; // Get the ID from query parameters
-      const filteredCities = citiesData.cities.filter(
-        (city) => city.id !== idToDelete
-      ); // Remove the city with the given ID
-      citiesData.cities = filteredCities; // Update the cities array
-      fs.writeFileSync(filePath, JSON.stringify(citiesData, null, 2)); // Save back to the file
-      res.status(204).end(); // No content to send back
-      break;
+      await fs.writeFile(filePath, JSON.stringify(cities, null, 2));
+      res.status(201).json(newCity);
+    }
 
-    default:
-      res.setHeader("Allow", ["GET", "POST", "DELETE"]); // Allowed methods
-      res.status(405).end(`Method ${req.method} Not Allowed`); // Method not allowed response
-      break;
+    if (req.method === "DELETE") {
+      const { id } = req.query;
+      cities = cities.filter((city) => city.id !== id);
+
+      await fs.writeFile(filePath, JSON.stringify(cities, null, 2));
+      res.status(200).json({ message: "City deleted successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error reading or writing to cities.json" });
   }
 }

@@ -1,10 +1,21 @@
 {
   "version": 2,
-  "builds": [],
+  "builds": [
+    {
+      "src": "api/cities.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
-      "src": "/data/cities.json",
-      "dest": "/data/cities.json"
+      "src": "/api/cities",
+      "methods": ["GET", "POST"],
+      "dest": "/api/cities.js"
+    },
+    {
+      "src": "/api/cities/:id",
+      "methods": ["DELETE"],
+      "dest": "/api/cities.js"
     }
   ]
 }
